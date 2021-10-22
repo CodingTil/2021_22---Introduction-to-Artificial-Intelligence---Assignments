@@ -10,6 +10,10 @@
 \usepackage{mathtools}
 \usepackage{listings}
 
+
+\lstset{mathescape=true,
+		morekeywords={if,else,and,then,for,return}}
+
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\today \\ Andrés Montoya, 405409 \\ Laura Koch, 406310 }
@@ -20,16 +24,59 @@
 
 \section*{Exercise 1.1}
 \begin{enumerate}[label=(\alph*)]
-	\item
-	\item
-	\item
+	\item	Yes, the elevator control can be regarded as an agent, as it follows the architecture of rational agents.
+
+			It has sensors (buttons) to percieve (button status) the environment (elevator + floors) and will operate (move up/down + open/close doors) based on that input, with the goal of transporting people.
+
+			The elevator control agent is reflexive with an internal state, as it always remembers the current floor the elevator is in.
+
+			Depending on the implementation of $\phi_v^u$ the agent may be goal-based or utility-based. If $\phi_v^u$ simply selects a random floor to be served next, it is just goal-based. If $\phi_v^u$ selects the next floor to be served while minimizing waiting time for example, it is utility-based.
+	\item	\begin{itemize}
+				\item	Persons transported per hour
+				\item	Average waiting time for buttons pressed in the elevator
+				\item	Average waiting time for buttons pressed on a floor
+			\end{itemize}
+	\item	The following function $\phi_v^u$ operates best when M/W are implemented as a stack.
+\begin{lstlisting}
+next $\leftarrow$ f
+m $\leftarrow$ M[0]
+w $\leftarrow$ W[0]
+
+if m is null and w is null then
+	return f
+if m is null and w is not null then
+	next $\leftarrow$ w
+if m is not null and w is null then
+	next $\leftarrow$ m
+if m is not null and w is not null then
+	if |m-f|>|w-f| then
+		next $\leftarrow$ w
+	else
+		next $\leftarrow$ m
+
+for x in M $\cup$ W
+	if |x-f|<|next-f| then
+		next $\leftarrow$ x
+
+return x
+\end{lstlisting}
 \end{enumerate}
 
 \section*{Exercise 1.2}
 \begin{enumerate}[label=(\alph*)]
-	\item
-	\item
-	\item
+	\item	\begin{itemize}
+				\item	semi-accessible: Information on number of people waiting on each floor and number of people inside the elevator could optimize the agent
+				\item	deterministic:
+				\item	episodc: choice of action only depends on current state
+				\item	dynamic: new buttons can be pressed while deciding
+				\item	discrete:
+			\end{itemize}
+	\item	\begin{itemize}
+				\item
+			\end{itemize}
+	\item	\begin{itemize}
+				\item
+			\end{itemize}
 \end{enumerate}
 
 \section*{Exercise 1.3}
