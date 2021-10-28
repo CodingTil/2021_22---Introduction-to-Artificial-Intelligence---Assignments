@@ -66,16 +66,24 @@ return x
 \begin{enumerate}[label=(\alph*)]
 	\item	\begin{itemize}
 				\item	semi-accessible: Information on number of people waiting on each floor and number of people inside the elevator could optimize the agent
-				\item	deterministic:
+				\item	deterministic: the elevator chooses his next action solely based on the current floor and the goal floor (assuming that $\phi^u_v$ is not random) 
 				\item	episodc: choice of action only depends on current state
 				\item	dynamic: new buttons can be pressed while deciding
-				\item	discrete:
+				\item	discrete: the elevators environment consists of the floors it can visit, which are discrete
 			\end{itemize}
 	\item	\begin{itemize}
-				\item
+				\item nonaccessible: many aspects of the internet are inaccessible to search engines, e.g. many databases or networks behind firewalls
+				\item 
+				\item episodic if cookies do not affect the results of a search, nonepisodic otherwise
+				\item dynamic: content on the internet can change any time, e.g. when a website is updated or put down
+				\item assuming the environment of the internet consists of any type of object (like websites, databases, etc.) in it, the environment would be discrete since the individual objects are atomic
 			\end{itemize}
 	\item	\begin{itemize}
-				\item
+				\item assuming the relevant aspects for the rover are his spacial surroundings, they must be accessible to the rover in order for it to navigate the surface of mars 
+				\item given that there are external influences like duststorms on mars which would affect the rover, one can argue that the environment is not entirely deterministic
+				\item nonepisodic: since the rover might not be supposed to go back to a place it has already visited (or the contrary) the previous positions/states determine the current actions
+				\item dynamic: the environment can change, for example when rocks roll down a hill or a sandstorm occurs
+				\item continuous: since a rover is a mobile robot performing in the real world it obviously operates in a continuous environment (as mentioned in the lecture) 
 			\end{itemize}
 \end{enumerate}
 
