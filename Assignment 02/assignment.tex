@@ -95,6 +95,68 @@ An admissible heuristic, that is not consistent:
 
 
 \section*{Exercise 2.4}
+\begin{enumerate}[label=(\alph*)]
+	\item	First we create a search graph
+			\begin{itemize}
+				\item	States/Nodes $V$: $(j_1,j_2) \in \{0,1,2,3\} \times \{0,1,2,3,4\}$\\
+						A state $(j_i, j_2)$ reflects how much liter of water is in jug $1$ and jug $2$.
+				\item	Actions $A \coloneqq \{f_i, e_i, p_{i,j} \vert i,j \in \{1,2\} \land i \neq j\}$\\
+						$f_i$ denotes the action of filling jug $i$. $e_i$ denotes the action of emptying jug $i$. $p_{i,j}$ denotes the action of pouring all the possible water from jug $i$ into jug $j$.
+				\item	Edges $E \subseteq V \times V$: $(v_1, v_2, a) \in V \times V \times A$
+						Each edge (directed) $(v_1, v_2, a)$ denotes a change of state $v_1$ into $v_2$ by action $a$.\\
+						There should only be possible edges in our graph: (the restrictions prevent self loops)
+						\begin{itemize}
+							\item	$((j_1, j_2), (3, j_2), f_1)$, if $j_1 \neq 3$
+							\item	$((j_1, j_2), (j_1, 4), f_2)$, if $j_2 \neq 4$
+							\item	$((j_1, j_2), (0, j_2), e_1)$, if $j_1 \neq 0$
+							\item	$((j_1, j_2), (j_1, 0), e_2)$, if $j_2 \neq 0$
+							\item	$((j_1, j_2), (\max(0, j_1 - \min(3, 4-j_2)), j_2 + (j_1 - \max(0, j_1 - \min(3, 4-j_2))), p_{1,2})$, if $j_1 \neq 0 \land j_2 \neq 4$
+							\item	$((j_1, j_2), (j_1 + (j_2 - \max(0, j_2 - (3 - j_1)))), \max(0, j_2 - (3 - j_1))), p_{2,1})$, if $j_2 \neq 0 \land j_1 \neq 3$
+						\end{itemize}
+			\end{itemize}
 
+			Now we can search from starting position $(0,0)$ to goal position $(0,2)$ in this graph.
+		\item	\begin{center}
+					\begin{tabular}{c|c||c|c}
+						$j_1$ & $j_2$ & $h(n)$ & reason \\
+						\hline
+						$*$ & $2$ & 0 & given (final) \\
+						$0$ & $0$ & 5 & given \\
+						$0$ & $0<y\neq 2$ & y & given \\
+						$3$ & $y<4\neq 2$ & 3 & given \\
+						$3$ & $4$ & 5 & given \\
+						$0<x<3$ & $y<4\neq 2$ & 4 & $f_1$ \\
+						$0<x<3$ & $4$ & 5 & $e_1$
+					\end{tabular}
+				\end{center}
+		\item	Node Encoding: $(j_1, j_2, f)$
+				\begin{center}
+					\begin{tikzpicture}
+						\begin{scope}[every node/.style={circle,thick,draw}]
+							% internal note encoding: j_1|j_2|layer
+							% layer 0
+							\node (000) at (0,0) {$(0,0,6)$};
+							% layer 1
+							\node (301) at (0,-3) {$(3,0,4)$};
+							\node (041) at (3,-3) {$(0,4,5)$};
+							% layer 2
+							\node (032) at (0,-6) {$(0,3,5)$};
+							\node (342) at (3,-6) {$(3,4,7)$};
+							% layer 3
+						\end{scope}
+
+						\begin{scope}[>={Stealth[black]},
+									every node/.style={fill=white,circle},
+									every edge/.style={draw=black,very thick}]
+							\path [->] (000) edge node {$f_1$} (301);
+							\path [->] (000) edge node {$f_2$} (041);
+
+							\path [->] (301) edge node {$p_{1,2}$} (032);
+							\path [->] (301) edge node {$f_2$} (342);
+						\end{scope}
+					\end{tikzpicture}
+					TODO NOT DONE YET
+				\end{center}
+\end{enumerate}
 
 \end{document}
